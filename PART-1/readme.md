@@ -1,4 +1,4 @@
-### 리스트의 개념
+## 리스트의 개념
 
 - 데이터를 담는 노드 목록에서 첫 번째 노드를 헤드(head)라고 부르고, 마지막 노드를 테일(tail)이라 부른다. 리스트의 길이는 **헤드부터 테일까지 이르는 노드 개수**
 
@@ -18,8 +18,6 @@
 
 - 리스트의 첫 번째 노드를 **헤드**라고 하고, 마지막 노드를 **테일**이라고 함.
 
-<img width="500" alt="Untitled 3" src="https://github.com/kmw10693/THIS-IS-DATA-STRUCTURE_AND_ALGORITHM-WITH-C/assets/60867950/a77409e6-eedc-4112-8e1c-4345f4dd2bd3">
-
 ### 링크드 리스트의 주요 연산
 
 - 노드 생성(CreateNode)/소멸(DestroyNode)
@@ -33,11 +31,12 @@
 
 </aside>
 
-## 노드 생성/소멸 연산
+## 0.3.3 메모리 레이아웃 복습
 
-### 0.3.3 메모리 레이아웃 복습
+<img width="500" alt="Untitled 3" src="https://github.com/kmw10693/THIS-IS-DATA-STRUCTURE_AND_ALGORITHM-WITH-C/assets/60867950/a77409e6-eedc-4112-8e1c-4345f4dd2bd3">
 
 - C 언어로 작성한 코드를 컴파일하면, 실행 파일이 생성 → 그 파일을 실행하면, 운영체제는 해당 실행파일을 **바탕으로 프로세스 생성 후** 이 프로세스에 **스택, 힙, 데이터, 텍스트 영역으로 이루어진 메모리를 할당합니다.**
+
 
 <img width="497" alt="Untitled 4" src="https://github.com/kmw10693/THIS-IS-DATA-STRUCTURE_AND_ALGORITHM-WITH-C/assets/60867950/40823c22-cac8-4d6d-83b2-d4ad975e11dd">
 
@@ -77,7 +76,7 @@ free(ptr);
 
 <img width="355" alt="Untitled 9" src="https://github.com/kmw10693/THIS-IS-DATA-STRUCTURE_AND_ALGORITHM-WITH-C/assets/60867950/e9cbc8ce-62b4-4ad1-8744-f3c1331f1c7c">
 
-### 노드 생성/소멸 연산
+## 노드 생성/소멸 연산
 
 - 링크드 리스트의 노드는 자동 메모리와 자유 저장소 중 어느 곳에 생성하면 좋을까?
 
@@ -112,7 +111,7 @@ void* malloc( size_t size );
 Node* NewNode = (Node*)malloc(sizeof(Node));
 ```
 
-### 노드 생성 연산 코드
+## 노드 생성 연산 코드
 
 ```cpp
 Node* SLL_CreateNode(ElementType NewData)
@@ -125,7 +124,7 @@ Node* SLL_CreateNode(ElementType NewData)
 }
 ```
 
-### 소멸 코드
+## 소멸 코드
 
 ```cpp
 void SLL_DestroyNode(Node* Node)
@@ -134,7 +133,7 @@ void SLL_DestroyNode(Node* Node)
 }
 ```
 
-### 노드 추가 연산
+## 노드 추가 연산
 
 - 노드 추가는 링크드 리스트의 테일 노드 뒤에 새로운 노드를 만들어 연결하는 연산이다. 꼬리를 덧붙이는 것이다.
 
@@ -164,9 +163,9 @@ void SLL_AppendNode(Node** Head, Node* NewNode)
 }
 ```
 
-### 노드 탐색 연산
+## 노드 탐색 연산
 
-왜 ‘*’가 아니고 ‘**’인가요?
+### 왜 ‘*’가 아니고 ‘**’인가요?
 
 ```java
 Node* List = NULL;
@@ -211,11 +210,12 @@ Node* SLL_GetNodeAt(Node* Head, int Location)
 }
 ```
 
-### 노드 삭제 연산
+## 노드 삭제 연산
 
 - 삭제하고자 하는 노드를 찾은 후 해당 노드의 다음 노드를 이전 노드의 NextNode 포인터에 연결하면 그 노드를 삭제할 수 있다.
 
-![Untitled](%E1%84%80%E1%85%B5%E1%86%B7%E1%84%86%E1%85%B5%E1%86%AB%E1%84%8B%E1%85%AE%201580cba1ab5c4f35bff2bc71307e3af1/Untitled%2014.png)
+![Untitled 14](https://github.com/kmw10693/THIS-IS-DATA-STRUCTURE_AND_ALGORITHM-WITH-C/assets/60867950/d828900d-43ab-4c2a-83fe-3edac02dd81d)
+
 
 ```java
 void SLL_RemoveNode(Node** Head, Node* Remove)
@@ -236,11 +236,12 @@ void SLL_RemoveNode(Node** Head, Node* Remove)
 		
 ```
 
-### 노드 삽입 연산
+## 노드 삽입 연산
 
 - 노드 삽입은 노드와 노드 사이에 새로운 노드를 끼워 넣는 연산이다.
 
-![Untitled](%E1%84%80%E1%85%B5%E1%86%B7%E1%84%86%E1%85%B5%E1%86%AB%E1%84%8B%E1%85%AE%201580cba1ab5c4f35bff2bc71307e3af1/Untitled%2015.png)
+![Untitled 15](https://github.com/kmw10693/THIS-IS-DATA-STRUCTURE_AND_ALGORITHM-WITH-C/assets/60867950/7df8aba8-0c8a-4153-b438-4568b4d34679)
+
 
 ```java
 void SLL_InsertAfter(Node* Current, Node* NewNode)
@@ -250,7 +251,7 @@ void SLL_InsertAfter(Node* Current, Node* NewNode)
 }
 ```
 
-### 노드 개수 세기 연산
+## 노드 개수 세기 연산
 
 - 노드의 개수를 세는 연산(리스트의 길이를 재는 연산)
 
@@ -270,7 +271,7 @@ int SLL_GetNodeCount(Node* Head)
 }
 ```
 
-### 링크드 리스트의 장단점
+## 링크드 리스트의 장단점
 
 **[단점]**
 
@@ -288,9 +289,10 @@ int SLL_GetNodeCount(Node* Head)
 
 </aside>
 
-### 1.3 더블 링크드 리스트
+## 1.3 더블 링크드 리스트
 
-![Untitled](%E1%84%80%E1%85%B5%E1%86%B7%E1%84%86%E1%85%B5%E1%86%AB%E1%84%8B%E1%85%AE%201580cba1ab5c4f35bff2bc71307e3af1/Untitled%2016.png)
+![Untitled 16](https://github.com/kmw10693/THIS-IS-DATA-STRUCTURE_AND_ALGORITHM-WITH-C/assets/60867950/7a322700-b8c1-4da9-bc38-2f4377aceffc)
+
 
 - 더블 링크드 리스트의 노드는 이전 노드, 다음 노드를 가리키는 포인터를 갖고 있다.
 
@@ -306,7 +308,7 @@ typedef struct tagNode
 
 ```
 
-### 노드 생성/소멸 연산
+## 노드 생성/소멸 연산
 
 - 생성한 노드의 PrevNode에 NULL을 대입하여 초기화하는 부분만 추가됨
 
@@ -332,11 +334,12 @@ void DLL_DestroyNode( Node* Node )
 }
 ```
 
-### 노드 추가 연산
+## 노드 추가 연산
 
 - 더블 링크드 리스트에서는 새로운 테일의 PrevNode 포인터도 기존 테일의 주소를 가리키도록 해야 함
 
-![Untitled](%E1%84%80%E1%85%B5%E1%86%B7%E1%84%86%E1%85%B5%E1%86%AB%E1%84%8B%E1%85%AE%201580cba1ab5c4f35bff2bc71307e3af1/Untitled%2017.png)
+![Untitled 17](https://github.com/kmw10693/THIS-IS-DATA-STRUCTURE_AND_ALGORITHM-WITH-C/assets/60867950/8f211066-f6f7-4193-a33a-e44050538965)
+
 
 ```cpp
 void DLL_AppendNode( Node** Head, Node* NewNode )
@@ -359,18 +362,19 @@ void DLL_AppendNode( Node** Head, Node* NewNode )
 }
 ```
 
-### 노드 삭제 연산
+## 노드 삭제 연산
 
 - 삭제할 노드의 N**extNode 포인터가 가리키던 노드를 이전 노드의 NextNode 포인터가 가리키게 바꾼다.**
 - 삭제할 노드의 **PrevNode 포인터가 가리키던 노드를 다음 노드의 PrevNode 포인터가 가리키게 바꾼다.**
 - NextNode, PrevNode를 NULL로 초기화
 
-![Untitled](%E1%84%80%E1%85%B5%E1%86%B7%E1%84%86%E1%85%B5%E1%86%AB%E1%84%8B%E1%85%AE%201580cba1ab5c4f35bff2bc71307e3af1/Untitled%2018.png)
+![Untitled 18](https://github.com/kmw10693/THIS-IS-DATA-STRUCTURE_AND_ALGORITHM-WITH-C/assets/60867950/2bd6a2c1-351a-455b-a5c9-eb0305fea2c3)
+
 
 ```cpp
-Void DLL_AppendNode( Node** Head, Node* Remove )
+Void DLL_RemoveNode( Node** Head, Node* Remove )
 {
-	if ((*head) == NULL)
+	if ( *Head == Remove )
 	{
 			*Head = Remove->NextNode;
 			if ( (*Head) != NULL )
@@ -396,9 +400,10 @@ Void DLL_AppendNode( Node** Head, Node* Remove )
 		
 ```
 
-### 노드 삽입 연산
+## 노드 삽입 연산
 
-![Untitled](%E1%84%80%E1%85%B5%E1%86%B7%E1%84%86%E1%85%B5%E1%86%AB%E1%84%8B%E1%85%AE%201580cba1ab5c4f35bff2bc71307e3af1/Untitled%2019.png)
+![Untitled 19](https://github.com/kmw10693/THIS-IS-DATA-STRUCTURE_AND_ALGORITHM-WITH-C/assets/60867950/4e24cfca-7052-4e80-a91b-0afac166cd9d)
+
 
 ```cpp
 void DLL_InsertAfter( Node* Current, Node* NewNode )
@@ -414,9 +419,10 @@ void DLL_InsertAfter( Node* Current, Node* NewNode )
 }
 ```
 
-### 환형 링크드 리스트
+## 환형 링크드 리스트
 
-![Untitled](%E1%84%80%E1%85%B5%E1%86%B7%E1%84%86%E1%85%B5%E1%86%AB%E1%84%8B%E1%85%AE%201580cba1ab5c4f35bff2bc71307e3af1/Untitled%2020.png)
+![Untitled 20](https://github.com/kmw10693/THIS-IS-DATA-STRUCTURE_AND_ALGORITHM-WITH-C/assets/60867950/86e1dd0a-3405-4bf1-969c-d5a9af38d952)
+
 
 **[환형 링크드 리스트의 장점]**
 
@@ -431,11 +437,12 @@ void DLL_InsertAfter( Node* Current, Node* NewNode )
 
 </aside>
 
-### 노드 추가 연산
+## 노드 추가 연산
 
 - **새로운 노드는 헤드가 되고, 헤드의 이전 노드는 헤드가 되며, 헤드의 다음 노드 역시 헤드 자신이 된다.**
 
-![Untitled](%E1%84%80%E1%85%B5%E1%86%B7%E1%84%86%E1%85%B5%E1%86%AB%E1%84%8B%E1%85%AE%201580cba1ab5c4f35bff2bc71307e3af1/Untitled%2021.png)
+![Untitled 21](https://github.com/kmw10693/THIS-IS-DATA-STRUCTURE_AND_ALGORITHM-WITH-C/assets/60867950/90360dc0-25b6-4732-8521-8d421d25c5b5)
+
 
 - 리스트가 비어 있지 않은 경우 **‘테일과 헤드 사이에 새 노드를 삽입한다.’**
 
@@ -462,7 +469,7 @@ void CDLL_AppendNode(Node** Head, Node* NewNode)
 	}
 ```
 
-### 노드 삭제 연산
+## 노드 삭제 연산
 
 ```cpp
 void CDLL_RemoveNode(Node** Head, Node* Remove)

@@ -192,3 +192,298 @@ SLL_AppendNode( List, NewNode );
 - SLL_AppendNode() 함수의 첫 번째 매개 변수를 Node**로 선언하면, Head 포인터 자신의 주소를 넘길 수 있게 된다. _Head 포인터는 List 포인터 변수의 ‘주소’를 가리키고, 이 주소를 이용하여 List가 NewNode의 주소를 가리키게 하는 것이다.
 
 <img width="304" alt="Untitled" src="https://github.com/kmw10693/THIS-IS-DATA-STRUCTURE_AND_ALGORITHM-WITH-C/assets/60867950/60629e4c-ae38-4857-b1a6-d6d69ce195b7">
+
+---
+
+- 링크드 리스트는 헤드부터 시작해서 다음 노드에 대한 포인터를 징검다리 삼아 차근차근 노드의 개수만큼 거쳐야만 원하는 요소에 접근할 수 있다. **(찾고자 하는 요소가 N번째에 있다면 N-1개의 노드를 거쳐야만 한다.)**
+
+```java
+Node* SLL_GetNodeAt(Node* Head, int Location)
+{
+	Node* Current = Head;
+	
+	while ( Current != NULL && (--Location) >= 0)
+	{
+		Current = Current->NextNode;
+	}
+	
+	return Current;
+}
+```
+
+### 노드 삭제 연산
+
+- 삭제하고자 하는 노드를 찾은 후 해당 노드의 다음 노드를 이전 노드의 NextNode 포인터에 연결하면 그 노드를 삭제할 수 있다.
+
+![Untitled](%E1%84%80%E1%85%B5%E1%86%B7%E1%84%86%E1%85%B5%E1%86%AB%E1%84%8B%E1%85%AE%201580cba1ab5c4f35bff2bc71307e3af1/Untitled%2014.png)
+
+```java
+void SLL_RemoveNode(Node** Head, Node* Remove)
+{
+	if ( *Head == Remove)
+	{
+		*Head = Remove->NextNode;
+	}
+	else 
+	{
+		Node* Current = *Head;
+		while ( Current != NULL && Current->NextNode != Remove)
+		{
+			Current = Current->NextNode;
+		}
+		
+		if (Current != NULL)
+		
+```
+
+### 노드 삽입 연산
+
+- 노드 삽입은 노드와 노드 사이에 새로운 노드를 끼워 넣는 연산이다.
+
+![Untitled](%E1%84%80%E1%85%B5%E1%86%B7%E1%84%86%E1%85%B5%E1%86%AB%E1%84%8B%E1%85%AE%201580cba1ab5c4f35bff2bc71307e3af1/Untitled%2015.png)
+
+```java
+void SLL_InsertAfter(Node* Current, Node* NewNode)
+{
+	NewNode->NextNode = Current->NextNode;
+	Current->NextNode = NewNode;
+}
+```
+
+### 노드 개수 세기 연산
+
+- 노드의 개수를 세는 연산(리스트의 길이를 재는 연산)
+
+```java
+int SLL_GetNodeCount(Node* Head)
+{
+	int Count = 0;
+	Node* Current = Head;
+	
+	while ( Current != NULL )
+	{
+		Current = Current->NextNode;
+		Count++;
+	}
+	
+	return Count;
+}
+```
+
+### 링크드 리스트의 장단점
+
+**[단점]**
+
+- 다음 노드를 가리키려는 포인터 때문에 각 노드 마다 추가적인 메모리(32bits / 4bytes, 64bits / 8bytes) 가 필요하다
+- 특정 위치에 있는 노드에 접근하기 위한 비용이 크며, 접근하기까지 시간도 많이 소요
+- **n번째 위치에 있는 노드에 접근하려면 n회의 노드 탐색 루프를 실행해야 해당 위치의 노드에 접근 가능**
+
+**[장점]**
+
+- 새로운 노드의 추가, 삽입, 삭제가 쉽고 빠릅니다. 배열은 새로운 요소를 삽입하거나, 기존 요소를 제거하기가 어려움
+- 현재 노드의 다음 노드를 얻어오는 연산에 대해서 비용이 발생하지 않는다.
+
+<aside>
+💻 **링크드 리스트는 레코드의 추가, 삽입, 삭제가 잦지만 조회는 드문곳(데이터베이스에서 조회해온 레코드를 순차적으로 다루는데 제격)!**
+
+</aside>
+
+### 1.3 더블 링크드 리스트
+
+![Untitled](%E1%84%80%E1%85%B5%E1%86%B7%E1%84%86%E1%85%B5%E1%86%AB%E1%84%8B%E1%85%AE%201580cba1ab5c4f35bff2bc71307e3af1/Untitled%2016.png)
+
+- 더블 링크드 리스트의 노드는 이전 노드, 다음 노드를 가리키는 포인터를 갖고 있다.
+
+```java
+Typedef int ElementType;
+
+typedef struct tagNode
+{
+	ElementType Data;
+	struct tagNode* PrevNode;
+	struct tagNode* NextNode;
+} Node;
+
+```
+
+### 노드 생성/소멸 연산
+
+- 생성한 노드의 PrevNode에 NULL을 대입하여 초기화하는 부분만 추가됨
+
+```cpp
+Node* DLL_CreateNode( ElementType NewData )
+{
+	Node* NewNode = (Node*)malloc(sizeof(Node));
+	
+	NewNode->Data = NewData;
+	NewNode->PrevNode = NULL;
+	NewNode->NextNode = NULL;
+	
+	return NewNode;
+}
+```
+
+- 노드를 자유 저장소에서 제거하는 함수
+
+```cpp
+void DLL_DestroyNode( Node* Node )
+{
+	free(Node);
+}
+```
+
+### 노드 추가 연산
+
+- 더블 링크드 리스트에서는 새로운 테일의 PrevNode 포인터도 기존 테일의 주소를 가리키도록 해야 함
+
+![Untitled](%E1%84%80%E1%85%B5%E1%86%B7%E1%84%86%E1%85%B5%E1%86%AB%E1%84%8B%E1%85%AE%201580cba1ab5c4f35bff2bc71307e3af1/Untitled%2017.png)
+
+```cpp
+void DLL_AppendNode( Node** Head, Node* NewNode )
+{
+	if ( (*Head) == NULL )
+	{
+		*Head = NewNode;
+	}
+	else 
+	{
+		Node* Tail = (*Head);
+		while ( Tail->NextNode != NULL )
+		{
+			Tail = Tail->NextNode;
+		}
+		
+		Tail->NextNode = NewNode;
+		NewNode->PrevNode = Tail;
+	}
+}
+```
+
+### 노드 삭제 연산
+
+- 삭제할 노드의 N**extNode 포인터가 가리키던 노드를 이전 노드의 NextNode 포인터가 가리키게 바꾼다.**
+- 삭제할 노드의 **PrevNode 포인터가 가리키던 노드를 다음 노드의 PrevNode 포인터가 가리키게 바꾼다.**
+- NextNode, PrevNode를 NULL로 초기화
+
+![Untitled](%E1%84%80%E1%85%B5%E1%86%B7%E1%84%86%E1%85%B5%E1%86%AB%E1%84%8B%E1%85%AE%201580cba1ab5c4f35bff2bc71307e3af1/Untitled%2018.png)
+
+```cpp
+Void DLL_AppendNode( Node** Head, Node* Remove )
+{
+	if ((*head) == NULL)
+	{
+			*Head = Remove->NextNode;
+			if ( (*Head) != NULL )
+				(*Head)->PrevNode = NULL;
+			
+			Remove->PrevNode = NULL;
+			Remove->NextNode = NULL;
+	}
+	else
+	{
+		Node* Temp = Remove;
+		
+		if (Remove->PrevNode != NULL)
+			Remove->PrevNode->NextNode = Temp->NextNode;
+		
+		if (Remove->NextNode != NULL)
+			Remove->NextNode->PrevNode = Temp->PrevNode;
+		
+		Remove->PrevNode = NULL;
+		Remove->NextNode = NULL;
+	}
+}
+		
+```
+
+### 노드 삽입 연산
+
+![Untitled](%E1%84%80%E1%85%B5%E1%86%B7%E1%84%86%E1%85%B5%E1%86%AB%E1%84%8B%E1%85%AE%201580cba1ab5c4f35bff2bc71307e3af1/Untitled%2019.png)
+
+```cpp
+void DLL_InsertAfter( Node* Current, Node* NewNode )
+{
+	NewNode->NextNode = Current->NextNode;
+	NewNode->PrevNode = Current;
+	
+	if (Current->NextNode != NULL )
+	{
+		Current->NextNode->PrevNode = NewNode;
+		Current->NextNode = NewNode;
+	}
+}
+```
+
+### 환형 링크드 리스트
+
+![Untitled](%E1%84%80%E1%85%B5%E1%86%B7%E1%84%86%E1%85%B5%E1%86%AB%E1%84%8B%E1%85%AE%201580cba1ab5c4f35bff2bc71307e3af1/Untitled%2020.png)
+
+**[환형 링크드 리스트의 장점]**
+
+- **시작을 알면 끝을 알 수 있고, 끝을 알면 시작을 알 수 있다**
+- 헤드의 이전 노드가 테일이 되고, 테일의 다음 노드가 헤드가 된다.
+- **테일에 접근하는 비용이 거의 없는 것이다 다름없을 정도로 작아진다.**
+- **DLL_AppendNode() 함수 성능 개선, 뒤에서부터 노드를 찾아나가는 노드 탐색 루틴 구현**
+
+<aside>
+💻 1. 테일은 헤드의 ‘이전 노드’이다.
+2. 헤드는 테일의 ‘다음 노드’이다.
+
+</aside>
+
+### 노드 추가 연산
+
+- **새로운 노드는 헤드가 되고, 헤드의 이전 노드는 헤드가 되며, 헤드의 다음 노드 역시 헤드 자신이 된다.**
+
+![Untitled](%E1%84%80%E1%85%B5%E1%86%B7%E1%84%86%E1%85%B5%E1%86%AB%E1%84%8B%E1%85%AE%201580cba1ab5c4f35bff2bc71307e3af1/Untitled%2021.png)
+
+- 리스트가 비어 있지 않은 경우 **‘테일과 헤드 사이에 새 노드를 삽입한다.’**
+
+```cpp
+void CDLL_AppendNode(Node** Head, Node* NewNode)
+{
+	 if ( (*Head) == NULL )
+	 {
+		 *Head = NewNode;
+		 (*Head)->NextNode = *Head;
+		 (*Head)->PrevNode = *Head;
+		}
+		else
+		{
+			// 테일과 헤드 사이에 NewNode를 삽입한다.
+			Node* Tail = (*Head)->PrevNode;
+			
+			Tail->NextNode->PrevNode = NewNode;
+			Tail->NextNode = NewNode;
+			
+			NewNode->NextNode = (*Head);
+			NewNode->PrevNode = Tail;
+		}
+	}
+```
+
+### 노드 삭제 연산
+
+```cpp
+void CDLL_RemoveNode(Node** Head, Node* Remove)
+{
+	if ( *Head == Remove )
+	{
+		**(*Head)->PrevNode**->NextNode = Remove->NextNode;
+		(*Head)->NextNode->PrevNode = Remove->PrevNode;
+		
+		*Head = Remove->NextNode;
+		
+		Remove->PrevNode = NULL;
+		Remove->NextNode = NULL;
+	}
+	else
+	{
+		Remove->PrevNode->NextNode = Remove->NextNode;
+		Remove->NextNode->PrevNode = Remove->PrevNode;
+		
+		Remove->PrevNode = NULL;
+		Remove->NextNode = NULL;
+	}
+}
+```

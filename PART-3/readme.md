@@ -115,3 +115,180 @@ void CQ_DestroyQueue(CircularQueue* Queue)
 ```
 
 - 순환 큐를 메모리에서 제거하는 함수
+
+### 노드 삽입 연산
+
+- `Rear` 값이 `*Queue -> Capacity + 1` 과 같은 값이라면 후단이 배열 끝에 도달했다는 의미이므로,  `Rear` 와 `Position` 을 0으로 지정합니다.
+- 그렇지 않은 경우, Rear에 위치를 Position에 저장하고 Rear 값을 1 증가시킵니다.
+
+![Untitled](3%E1%84%8C%E1%85%A1%E1%86%BC%20%E1%84%8F%E1%85%B2%20d4c2cffedb2f45638f97f50b23e4da48/Untitled%209.png)
+
+```cpp
+void CQ_Enqueue(CircularQueue* Queue, ElementType Data)
+{
+	int Position = 0;
+	
+	if(Queue->Rear==Queue->Capacity)
+	{
+		Position=Queue->Rear;
+		Queue->Rear=0;
+	}
+	else
+		Position=Queue->Rear++;
+	
+	Queue->Nodes[Position].Data = Data;
+}
+
+```
+
+### 노드 제거 연산
+
+```cpp
+ElementType CQ_Dequeue(CircularQueue* Queue)
+{
+	int Position = Queue->Front;
+	
+	if (Queue->Front == Queue->Capacity)
+		Queue->Front = 0;
+	else
+		Queue->Front++;
+	
+	return Queue->Nodes[Position].Data;
+}
+```
+
+- 전단의 위치(Front)를 `Position` 에 저장합니다.
+- `Position` 은 `CQ_Dequeue()` 함수가 큐에 저장되어 있던 데이터를 반환할 때, `Nodes` 배열의 인덱스로 사용되는 변수
+- `Front` 의 값이 `Capacity` 와 같을 때, `Front` 를 0으로 초기화하고, 그렇지 않은 경우 `Front` 의 값을 1만큼 증가
+
+![Untitled](3%E1%84%8C%E1%85%A1%E1%86%BC%20%E1%84%8F%E1%85%B2%20d4c2cffedb2f45638f97f50b23e4da48/Untitled%2010.png)
+
+### 공백 상태 확인
+
+- 전단과 후단의 값이 같으면 공백 상태라는 의미이다.
+
+```cpp
+int CQ_IsEmpty(CircularQueue* Queue)
+{
+	return (Queue->Front == Queue->Rear);
+}
+```
+
+### 포화 상태 확인
+
+- 전단이 후단 앞에 있는 경우 (Rear - Front)가 큐의 용량(Capacity)와 동일 한 경우
+- 후단에 1을 더한 값(Rear + 1)이 전단(Front)와 동일한 경우
+
+```cpp
+int CQ_IsFull(CircularQueue* Queue)
+{
+	if (Queue->Front < Queue->Rear)
+		return (Queue->Rear - Queue->Front) == Queue->Capacity;
+	else
+		return (Queue->Rear + 1 ) == Queue->Front;
+}
+```
+
+## 링크드 큐
+
+- 링크드 큐가 순환 큐와 다른 한 가지 점은 큐가 가득 찬 상태인지 확인할 필요가 없다.
+- 성능은 순환 큐가 더 빠르다**(`malloc` , `calloc`  함수를 쓸 필요가 없기 때문)**
+- 필요한 큐의 크기를 미리 정할 수 있고, 고성능이 요구 되는 상황에서는 링크드 큐보다 순환 큐를 선택하는 것이 낫다.
+
+### 링크드 큐와 노드 선언
+
+- 데이터 필드와 다음 노드를 가리키는 포인터로 구성
+
+```cpp
+typedef struct tagNode
+{
+	char* Data;
+	struct tagNode* NextNode;
+} Node;
+```
+
+- 링크드 큐 구조체는 큐의 전단을 가리키는 `Front` , 후단을 가리키는 `Rear` , 노드 개수를 나타내는 `Count` 로 구성
+
+```cpp
+typedef struct tagLinkedQueue
+{
+	Node* Front;
+	Node* Rear;
+	int Count;
+} LinkedQueue;
+```
+
+### 링크드 큐 생성/소멸 연산
+
+- `LinkedQueue` 구조체를 자유 저장소에 생성하고, 이 구조체의 각 필드를 초기화 한다.
+
+```cpp
+void LQ_CreateQueue(LinkedQueue** Queue)
+{
+	(*Queue) = (LinkedQueue*)malloc(sizeof(LinkedQueue));
+	(*Queue)->Front = NULL;
+	(*Queue)->Rear = NULL;
+	(*Queue)->Count = 0;
+}
+```
+
+- 링크드 큐의 소멸을 담당하는 함수는 큐 내부에 있는 모든 노드를 힙에서 제거하고, 큐 마저 제거한다.
+
+```cpp
+void LQ_DestroyQueue(LinkedQueue* Queue)
+{
+	while(!LQ_IsEmpty(Queue))
+	{
+		Node* Popped = LQ_Dequeue(Queue);
+		LQ_DestroyNode(Popped);
+	}
+	
+	free(Queue);
+}
+```
+
+### 노드 삽입 연산
+
+- 새로운 노드를 후단에 붙인다.
+
+```cpp
+void LQ_Enqueue(LinkedQueue* Queue, Node* NewNode)
+{
+	if(Queue->Front == NULL)
+	{
+		Queue->Front = NewNode;
+		Queue->Rear = NewNode;
+		Queue->Count++;
+	}
+	else
+	{
+		Queue->Rear->NextNode = NewNode;
+		Queue->Rear = NewNode;
+		Queue->Count++;
+	}
+}
+```
+
+### 노드 제거 연산
+
+- 전단 뒤에 있던 노드를 새로운 전단으로 만들고 전단이었던 노드의 포인터를 호출자에게 반환 하면 된다.
+
+```cpp
+Node* LQ_Dequeue(LinkedQueue* Queue)
+{
+	Node* Front = Queue->Front;
+	
+	if(Queue->Front->NextNode == NULL)
+	{
+		Queue->Front = NULL;
+		Queue->Rear = NULL;
+	}
+	else
+	{
+		Queue->Front = Queue->Front->NextNode;
+	}
+	
+	Queue->Count--;
+	return Front;
+}
+```

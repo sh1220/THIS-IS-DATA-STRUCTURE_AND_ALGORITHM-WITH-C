@@ -8,20 +8,19 @@
 
 - 큐의 가장 앞 요소를 `전단(Front)` , 가장 마지막 요소를 `후단(Rear`) 이라고 부른다.
 - 큐의 경우, `삽입(Enqueue)` 연산은 후단, `제거(Dequeue)` 연산은 전단에서 각각 수행 된다.
+  
+![Untitled](https://github.com/kmw10693/THIS-IS-DATA-STRUCTURE_AND_ALGORITHM-WITH-C/assets/60867950/d6e4d25a-314c-4a6e-bd21-a635db872740)
+![Untitled 1](https://github.com/kmw10693/THIS-IS-DATA-STRUCTURE_AND_ALGORITHM-WITH-C/assets/60867950/25c50cec-eac6-4fcc-88c4-21f97c927325)
 
-![Untitled](3%E1%84%8C%E1%85%A1%E1%86%BC%20%E1%84%8F%E1%85%B2%20d4c2cffedb2f45638f97f50b23e4da48/Untitled.png)
-
-![Untitled](3%E1%84%8C%E1%85%A1%E1%86%BC%20%E1%84%8F%E1%85%B2%20d4c2cffedb2f45638f97f50b23e4da48/Untitled%201.png)
 
 - 제거는 전단의 노드를 없애서 전단 뒤에 있는 노드를 새로운 전단으로 만드는 연산
 
-![Untitled](3%E1%84%8C%E1%85%A1%E1%86%BC%20%E1%84%8F%E1%85%B2%20d4c2cffedb2f45638f97f50b23e4da48/Untitled%202.png)
 
 ### 순환 큐
 
 - 배열을 이용해서 큐를 구현할 경우(제거 연산)
 
-![Untitled](3%E1%84%8C%E1%85%A1%E1%86%BC%20%E1%84%8F%E1%85%B2%20d4c2cffedb2f45638f97f50b23e4da48/Untitled%203.png)
+![Untitled 3](https://github.com/kmw10693/THIS-IS-DATA-STRUCTURE_AND_ALGORITHM-WITH-C/assets/60867950/10ba8c16-cd61-456c-9aab-03e261254eae)
 
 - 전단인 1을 제거하면, **배열 내의 첫 번째 인덱스의 요소가 비게 되고, 빈 자리를 채우기 위해 뒤 에 있던 요소가 앞으로 한 칸씩 옮겨짐**
 - 전단을 제거한 후 **나머지 요소들을 한 칸씩 앞으로 옮기는 데 드는 비용이 상당하다.**
@@ -32,24 +31,24 @@
 
 </aside>
 
-![Untitled](3%E1%84%8C%E1%85%A1%E1%86%BC%20%E1%84%8F%E1%85%B2%20d4c2cffedb2f45638f97f50b23e4da48/Untitled%204.png)
+![Untitled 4](https://github.com/kmw10693/THIS-IS-DATA-STRUCTURE_AND_ALGORITHM-WITH-C/assets/60867950/7d372623-da70-4205-830f-f90c28aca06d)
 
 - 이렇게 하면 배열 요소들의 이동으로 인한 부하 문제 해결
 - 제거 연산을 수행할 때마다 큐의 가용 용량이 줄어든다.
 
 ### 순환 큐(Circular Queue)의 도입
 
-![Untitled](3%E1%84%8C%E1%85%A1%E1%86%BC%20%E1%84%8F%E1%85%B2%20d4c2cffedb2f45638f97f50b23e4da48/Untitled%205.png)
+![Untitled 5](https://github.com/kmw10693/THIS-IS-DATA-STRUCTURE_AND_ALGORITHM-WITH-C/assets/60867950/afa99b06-8f50-4538-b696-44a7d62c5d5f)
 
 - **시작과 끝을 연결해서 효율적인 삽입/삭제 연산이 가능하도록 고안된 큐**
 
 ### 공백 상태와 포화 상태
 
-![Untitled](3%E1%84%8C%E1%85%A1%E1%86%BC%20%E1%84%8F%E1%85%B2%20d4c2cffedb2f45638f97f50b23e4da48/Untitled%206.png)
+![Untitled 6](https://github.com/kmw10693/THIS-IS-DATA-STRUCTURE_AND_ALGORITHM-WITH-C/assets/60867950/1bd48d93-4d09-4710-a722-88e0ce958e55)
 
 - 공백 상태, 포화 상태일 때도 전단과 후단이 만나기 때문에, **두 상태를 구분하는 방법을 찾아야 한다.**
 
-![Untitled](3%E1%84%8C%E1%85%A1%E1%86%BC%20%E1%84%8F%E1%85%B2%20d4c2cffedb2f45638f97f50b23e4da48/Untitled%207.png)
+![Untitled 7](https://github.com/kmw10693/THIS-IS-DATA-STRUCTURE_AND_ALGORITHM-WITH-C/assets/60867950/c52bf3b2-ea41-449e-85b7-f218184b83ad)
 
 <aside>
 ✅ 큐 배열을 생성할 때, 실제 용량보다 1만큼 더 크게 만들어서 전단과 후단 사이를 비운다.
@@ -86,8 +85,8 @@ typedef struct tagCircularQueue
 
 - CircularQueue 구조체의 `Nodes` 포인터가 가리키는 배열은 큐에 생성된다.
 - `Capacity` 는 순환 큐의 용량, Nodes를 메모리에 할당할 때는 `Capacity+1` 만큼의 크기를 할당한다. **(노드 하나를 공백/포화 상태 구분용 더미 노드로 사용)**
-
-![Untitled](3%E1%84%8C%E1%85%A1%E1%86%BC%20%E1%84%8F%E1%85%B2%20d4c2cffedb2f45638f97f50b23e4da48/Untitled%208.png)
+  
+![Untitled 8](https://github.com/kmw10693/THIS-IS-DATA-STRUCTURE_AND_ALGORITHM-WITH-C/assets/60867950/5999df78-0285-4653-ba59-14ce90d8c494)
 
 ### 순환 큐 생성/소멸 연산
 
@@ -121,7 +120,7 @@ void CQ_DestroyQueue(CircularQueue* Queue)
 - `Rear` 값이 `*Queue -> Capacity + 1` 과 같은 값이라면 후단이 배열 끝에 도달했다는 의미이므로,  `Rear` 와 `Position` 을 0으로 지정합니다.
 - 그렇지 않은 경우, Rear에 위치를 Position에 저장하고 Rear 값을 1 증가시킵니다.
 
-![Untitled](3%E1%84%8C%E1%85%A1%E1%86%BC%20%E1%84%8F%E1%85%B2%20d4c2cffedb2f45638f97f50b23e4da48/Untitled%209.png)
+![Untitled 9](https://github.com/kmw10693/THIS-IS-DATA-STRUCTURE_AND_ALGORITHM-WITH-C/assets/60867950/257db039-d93f-4c01-b9ca-2d98218be522)
 
 ```cpp
 void CQ_Enqueue(CircularQueue* Queue, ElementType Data)
@@ -161,7 +160,7 @@ ElementType CQ_Dequeue(CircularQueue* Queue)
 - `Position` 은 `CQ_Dequeue()` 함수가 큐에 저장되어 있던 데이터를 반환할 때, `Nodes` 배열의 인덱스로 사용되는 변수
 - `Front` 의 값이 `Capacity` 와 같을 때, `Front` 를 0으로 초기화하고, 그렇지 않은 경우 `Front` 의 값을 1만큼 증가
 
-![Untitled](3%E1%84%8C%E1%85%A1%E1%86%BC%20%E1%84%8F%E1%85%B2%20d4c2cffedb2f45638f97f50b23e4da48/Untitled%2010.png)
+![Untitled 10](https://github.com/kmw10693/THIS-IS-DATA-STRUCTURE_AND_ALGORITHM-WITH-C/assets/60867950/67507e82-9357-407b-ab12-872da48930d0)
 
 ### 공백 상태 확인
 

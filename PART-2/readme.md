@@ -1,6 +1,5 @@
 # 2장 스택
 
-[스택 퀴즈](https://www.notion.so/df6715c44a264285b3838eee8c921c26?pvs=21)
 
 ## 스택의 개념
 
@@ -14,13 +13,15 @@
 
 - 삽입 연산: 스택 위에 새로운 노드(요소)를 쌓는 일
 
-![Untitled](2%E1%84%8C%E1%85%A1%E1%86%BC%20%E1%84%89%E1%85%B3%E1%84%90%E1%85%A2%E1%86%A8%2076a6459827ba41a69d7287a7c3322ad2/Untitled.png)
+![Untitled](https://github.com/user-attachments/assets/6e4289bc-a16e-475f-97ae-c315db59193e)
+
 
 ### 
 
 - 제거 연산: 스택에서 최상위 노드를 걷어 내는 일
 
-![Untitled](2%E1%84%8C%E1%85%A1%E1%86%BC%20%E1%84%89%E1%85%B3%E1%84%90%E1%85%A2%E1%86%A8%2076a6459827ba41a69d7287a7c3322ad2/Untitled%201.png)
+![Untitled 1](https://github.com/user-attachments/assets/997f1b7e-a6ec-4308-afcd-bb1e8f36bb1a)
+
 
 ## 배열로 구현하는 스택
 
@@ -41,7 +42,8 @@ typedef struct tagArrayStack
 } ArrayStack;
 ```
 
-![Untitled](2%E1%84%8C%E1%85%A1%E1%86%BC%20%E1%84%89%E1%85%B3%E1%84%90%E1%85%A2%E1%86%A8%2076a6459827ba41a69d7287a7c3322ad2/Untitled%202.png)
+![Untitled 2](https://github.com/user-attachments/assets/70d46af3-036a-49aa-9e29-15d5f82d9455)
+
 
 ### 스택 및 노드 생성/소멸 연산
 
@@ -122,7 +124,8 @@ typedef struct tagNode
 - Data 필드가 `char*` 형으로 선언되어, 문자열이 저장된 주소만 담을 수 있다.
 - 문자열은 자동 메모리(스택)이 아닌, 자유 저장소(힙)에 저장된다.
 
-![Untitled](2%E1%84%8C%E1%85%A1%E1%86%BC%20%E1%84%89%E1%85%B3%E1%84%90%E1%85%A2%E1%86%A8%2076a6459827ba41a69d7287a7c3322ad2/Untitled%203.png)
+![Untitled 3](https://github.com/user-attachments/assets/12482d47-6b84-4c16-bd1c-4ad43184f2ed)
+
 
 ### 링크드 리스트 스택의 구조체
 
@@ -137,7 +140,8 @@ typedef struct tagLinkedListStack
 - `List` 포인터는 데이터를 담는 링크드 리스트를 가리킨다.
 - `Top` 포인터는 링크드 리스트의 테일을 가리킨다.
 
-![Untitled](2%E1%84%8C%E1%85%A1%E1%86%BC%20%E1%84%89%E1%85%B3%E1%84%90%E1%85%A2%E1%86%A8%2076a6459827ba41a69d7287a7c3322ad2/Untitled%204.png)
+![Untitled 4](https://github.com/user-attachments/assets/a32e76d2-a290-424b-977b-fc511e511ffe)
+
 
 ### 스택 생성/소멸 연산
 
